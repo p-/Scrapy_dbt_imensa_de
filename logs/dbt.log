@@ -1,0 +1,50 @@
+
+
+============================== 2022-10-09 22:03:06.814881 | 89519f48-60ed-41b0-b6cc-64a0679539bd ==============================
+[0m22:03:06.814902 [info ] [MainThread]: Running with dbt=1.2.2
+[0m22:03:06.815648 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/fabian/.dbt', 'send_anonymous_usage_stats': True, 'event_buffer_size': 100000, 'quiet': False, 'no_print': False, 'project_name': 'imensa', 'skip_profile_setup': False, 'which': 'init', 'indirect_selection': 'eager'}
+[0m22:03:06.816049 [debug] [MainThread]: Tracking: tracking
+[0m22:03:06.818224 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b51b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b4e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b4f10>]}
+[0m22:03:06.821264 [debug] [MainThread]: Starter project path: /home/fabian/.local/lib/python3.10/site-packages/dbt/include/starter_project
+[0m22:03:10.763264 [info ] [MainThread]: 
+Your new dbt project "imensa" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m22:03:10.763885 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b5960>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b5840>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04e29b5cc0>]}
+[0m22:03:10.764449 [debug] [MainThread]: Flushing usage events
+
+
+============================== 2022-10-09 22:05:02.731425 | 28be1824-94c4-4124-b9bb-9c6ba33c455b ==============================
+[0m22:05:02.731440 [info ] [MainThread]: Running with dbt=1.2.2
+[0m22:05:02.731939 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/fabian/.dbt', 'send_anonymous_usage_stats': True, 'event_buffer_size': 100000, 'quiet': False, 'no_print': False, 'config_dir': True, 'which': 'debug', 'indirect_selection': 'eager'}
+[0m22:05:02.732174 [debug] [MainThread]: Tracking: tracking
+[0m22:05:02.734202 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da1120>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da1060>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da1030>]}
+[0m22:05:02.734658 [info ] [MainThread]: To view your profiles.yml file, run:
+
+xdg-open /home/fabian/.dbt
+[0m22:05:02.735113 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da1060>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da1030>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f05b0da0e80>]}
+[0m22:05:02.735490 [debug] [MainThread]: Flushing usage events
+
+
+============================== 2022-10-09 22:06:53.175457 | ba9953de-3108-42fb-919c-bcdf8f5a9974 ==============================
+[0m22:06:53.175472 [info ] [MainThread]: Running with dbt=1.2.2
+[0m22:06:53.175969 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/fabian/.dbt', 'send_anonymous_usage_stats': True, 'event_buffer_size': 100000, 'quiet': False, 'no_print': False, 'config_dir': False, 'which': 'debug', 'indirect_selection': 'eager'}
+[0m22:06:53.176346 [debug] [MainThread]: Tracking: tracking
+[0m22:06:53.178498 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7637be5090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7637be4f10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7637be5000>]}
+[0m22:06:53.485306 [debug] [MainThread]: Executing "git --help"
+[0m22:06:53.488463 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m22:06:53.488803 [debug] [MainThread]: STDERR: "b''"
+[0m22:06:53.489190 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7636116bf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7636114a00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7636114820>]}
+[0m22:06:53.489598 [debug] [MainThread]: Flushing usage events

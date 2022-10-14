@@ -1,0 +1,228 @@
+version: 2
+
+sources:
+  - name: imensa_scraper
+    description: database to host the data of the imensa_scraper
+    schema: public
+    tables:
+      - name: items_raw
+        description: >
+          One record per scraped item per day. Items are mostly meals, but also info on closed mensas
+          Table contains all the data for mensas and their ratings as well
+          For a visual representation of where the different columns come from
+          on the relevant imensa.de page per mensa see imensa_scraper_items.png
+          ELT process is designed for daily updates.
+        columns:
+          - name: id
+            description: Primary key of the items
+            tests:
+              - unique
+              - not_null
+          - name: mensa_name
+            description: Name of the Mensa where the item was scraped
+            tests:
+              - not_null
+          - name: state
+            description: State (Bundesland) in Austria/Germany of the mensa where the item was scraped
+            tests:
+              - not_null
+          - name: meal_category
+            description: category description of the item (e.g. Tagesteller, Menü Classic 1, Information 1)
+          - name: meal_name
+            description: textual description of the item scraped. Most are meals, some are information (e.g. mensa closed)
+            tests:
+              - not_null
+          - name: price
+            description: price of the item scraped unformatted with euro sign
+          - name: price_per
+            description: e.g. ProPortion, pro100g
+          - name: last_time
+            description: last date the meal in meal_name was served
+          - name: meal_attributes
+            description: info about ingredients (vergan, meat, additives, allergens, nutrients)
+          - name: day_meal
+            description: day of the week that the item scraped was offered (eg. Montag)
+          - name: date_meal
+            description: date when the item scraped was offered
+          - name: stars_average
+            description: average number of stars that the mensa of the item scraped has received from the users
+          - name: ratings_count
+            description: number of ratings that the mensa of the item scraped received
+          - name: number_5_star_ratings
+            description: number of 5 star ratings that the mensa of the item scraped received
+          - name: number_4_star_ratings
+            description: number of 4 star ratings that the mensa of the item scraped received
+          - name: number_3_star_ratings
+            description: number of 3 star ratings that the mensa of the item scraped received
+          - name: number_2_star_ratings
+            description: number of 2 star ratings that the mensa of the item scraped received
+          - name: number_1_star_ratings
+            description: number of 1 star ratings that the mensa of the item scraped received
+          - name: street_and_nr
+            description: streetname and house number of the respective mensa (eg. Wileystraße 1)
+            tests:
+              - not_null
+          - name: plz_and_city
+            description: plz and city of the respective mensa (e.g.72622 Nürtingen)
+            tests:
+              - not_null
+          - name: unique_key
+            description: unique_key/surrogate key used to create the id field while loading into postgres
+            tests:
+              - not_null
+              - unique
+          - name: operator
+            description: operator of the mensa where the item was scraped
+          - name: list_mensas_close
+            description: list of close mensas in an array with distances
+          - name: day_minute_scraped
+            description: time when the item was scraped and subsequently uploaded
+            tests:
+              - not_null
+
+
+models:
+  - name: data_cleaning
+    description: basic data cleaning, casting, generating new columns with case, regex etc.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+  - name: create_foreign_keys
+    description: creates foreign keys for the entities ind mensen.sql and ratings_mensen.sql in the main table
+
+  - name: meals
+    description: final table of the meals among the items scraped using imensa_scraper - filtered for meals
+    columns:
+      - name: id
+        description: Primary key of the meals
+        tests:
+          - unique
+          - not_null
+      - name: mensa_id
+        description: foreign key of mensen.sql
+        tests:
+          - relationships:
+              to: ref('mensen')
+              field: id
+      - name: rating_mensa_id
+        description: foreign key of ratings_mensen
+        tests:
+          - relationships:
+              to: ref('ratings_mensen')
+              field: id
+      - name: meal_category
+        description: category description of the item (e.g. Tagesteller, Menü Classic 1, Information 1)
+      - name: meal_description
+        description: textual description of the meal scraped
+        tests:
+          - not_null
+      - name: price_in_euro
+        description: price in euro as a number without € sign
+      - name: price_per
+        description: what ist the price per (eg. Pro Portion or Pro 100 g) - if nothing was given Pro Portion was inserted
+      - name: last_time_meal
+        description: last date the meal in meal_description was served
+      - name: meal_attribute_general
+        description: everything mentioned in the meal_attributes column from the source items_raw that was before any allergens, nutrient or additives info
+      - name: meal_attribute_additives
+        description: all the additives extracted from the meal_attributes column from the source items_raw
+      - name: meal_attributes_allergens
+        description: all the allergens extracted from the meal_attributes column from the source items_raw
+      - name: meal_attributes_calories_macros
+        description: all the info about calories and macros from the meal_attributes column from the source items_raw
+      - name: date_meal
+        description: the date the meal was offered
+        tests:
+          - not_null
+
+
+
+  - name: ratings_mensen
+    description: ratings of the mensen per day
+    columns:
+      - name: id
+        description: primary key for the daily ratings per mensa (unique for mensa_name, daily_date, city, street_name)
+        tests:
+          - unique
+          - not_null
+      - name: mensa_name
+        description: name of the mensa that is rated
+        tests:
+          - not_null
+
+      - name: mensa_id
+        description: foreign key of the entities in mensen.sql
+        tests:
+          - relationships:
+              to: ref('mensen')
+              field: id
+          - not_null
+      - name: city
+        description: city of the mensa that is being rated
+        tests:
+          - not_null
+      - name: streetname
+        description: name of the street of the mensa being rated
+        tests:
+          - not_null
+      - name: stars_average
+        description: average number of stars that the mensa received in this rating (1 to 5)
+      - name: ratings_count
+        description: number of times the mensa has been rated at this point in time
+      - name: number_5_star_ratings_percent
+        description: number of 5 star ratings in percent that the mensa of the item scraped received
+      - name: number_4_star_ratings_percent
+        description: number of 4 star ratings in percent that the mensa of the item scraped received
+      - name: number_3_star_ratings_percent
+        description: number of 3 star ratings in percent that the mensa of the item scraped received
+      - name: number_2_star_ratings_percent
+        description: number of 2 star ratings in percent that the mensa of the item scraped received
+      - name: number_1_star_ratings_percent
+        description: number of 1 star ratings in percent that the mensa of the item scraped received
+      - name: daily_date_created
+        description: date of the scraping and loading of the rating and also date of the rating
+        tests:
+          - not_null
+
+
+
+  - name: mensen
+    description: final table of the mensas scraped from imensa.de- rows unique for columns mensa_name, state and city
+    columns:
+      - name: id
+        description: primary key of the entities mensen
+        tests:
+          - unique
+          - not_null
+      - name: mensa_name
+        description: name of the mensa
+        tests:
+          - not_null
+      - name: city
+        description: city of the mensa
+        tests:
+          - not_null
+      - name: streetname
+        description: streetname of the mensa
+        tests:
+          - not_null
+      - name: state
+        description: state/bundesland of the mensa
+        tests:
+          - not_null
+      - name: house_number
+        description: house number of the mensa
+      - name: plz
+        description: plz of the mensa
+        tests:
+          - not_null
+      - name: operator
+        description: operator of the mensa
+      - name: max_timestamp_created
+        description: when was the mensa information scraped
+        tests:
+          - not_null
+

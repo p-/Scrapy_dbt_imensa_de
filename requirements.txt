@@ -1,0 +1,5 @@
+scrapy
+psycopg2-binary
+dbt-postgres
+
+

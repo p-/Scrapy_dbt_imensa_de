@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+    imensa_scraper:
+        build:
+          context: ./scraper_imensa/
+          dockerfile: Dockerfile
+        container_name: scraper_imensa
+        tty: true
+        stdin_open: true
+        volumes:
+          - ./scraper_imensa:/app
+        depends_on:
+          - postgres
+
+    postgres:
+      image: postgres:14.1-alpine
+      restart: always
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      ports:
+        - '6055:5432'
+      volumes:
+        - db:/var/lib/postgresql/data
+
+    dbt-postgres:
+      image: ghrc.io/dbt-labs/dbt-postgres:1.3.latest
+      container_name: dbt-postgres
+      tty: true
+      stdin_open: true
+      volumes:
+        - ./imensa:/app2
+      depends_on:
+        - postgres
+volumes:
+  db:
+    driver: local
+
